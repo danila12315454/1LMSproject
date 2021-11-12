@@ -364,7 +364,7 @@ class App(QWidget, UI_Design):
     def RSstart(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        information = cursor.execute("SELECT * FROM stats").fetchall()
+        information = cursor.execute("SELECT * FROM stats ORDER BY date ASC").fetchall()
         connection.close()
         self.tableWidget.setRowCount(len(information))
         self.tableWidget.setColumnCount(5)
@@ -412,7 +412,7 @@ class App(QWidget, UI_Design):
     def CreateGraf(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        arr = [list(i) for i in cursor.execute(f"SELECT * FROM stats").fetchall()]
+        arr = [list(i) for i in cursor.execute(f"SELECT * FROM stats ORDER BY date ASC").fetchall()]
         dikt = {}
         for i in arr:
             try:
