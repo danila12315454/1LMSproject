@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QLabel, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QTableWidgetItem, QLabel, \
+    QMessageBox
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sqlite3
@@ -160,29 +161,38 @@ class UI_Design(object):
         _translate = QtCore.QCoreApplication.translate
         Design.setWindowTitle(_translate("Design", "Type Train"))
         """self.textEdit.setHtml(_translate("Design",
-                                         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-                                         "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-                                         "p, li { white-space: pre-wrap; }\n"
-                                         "</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:18pt;"
-                                         " font-weight:400; font-style:normal;\">\n"
-                                         "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px;"
-                                         " margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"
-                                         " font-size:2pt;\"><br /></p></body></html>"))"""
+         "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\"\
+          \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+         "<html><head><meta name=\"qrichtext\" content=\"1\"\
+          /><style type=\"text/css\">\n"
+         "p, li { white-space: pre-wrap; }\n"
+         "</style></head><body style=\" font-family:\'MS Shell Dlg 2\';\
+          font-size:18pt;"
+         " font-weight:400; font-style:normal;\">\n"
+         "<p style=\"-qt-paragraph-type:empty; margin-top:0px;\
+          margin-bottom:0px;"
+         " margin-left:0px; margin-right:0px; -qt-block-indent:0;\
+         text-indent:0px;"
+         " font-size:2pt;\"><br /></p></body></html>"))"""
         self.pushButton_2.setText(_translate("Design", "Заново"))
         self.label.setText(_translate("Design", "Нажатия"))
         self.label_2.setText(_translate("Design", "Аккуратность"))
         self.label_3.setText(_translate("Design", "Верные слова"))
         self.label_4.setText(_translate("Design", "Неверные слова"))
         self.label_5.setText(_translate("Design", "26 СВМ"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Design", "Type test"))
-        self.pushButton.setText(_translate("Design", "Показать статистику WPM/Day"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Design", "Records/Stats"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab),
+                                  _translate("Design", "Type test"))
+        self.pushButton.setText(
+            _translate("Design", "Показать статистику WPM/Day"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2),
+                                  _translate("Design", "Records/Stats"))
         self.label_6.setText(_translate("Design", "Название сета:"))
         self.pushButton_3.setText(_translate("Design", "нарезать"))
         self.label_7.setText(_translate("Design", "Слово:"))
         self.label_8.setText(_translate("Design", "Название сета:"))
         self.pushButton_4.setText(_translate("Design", "Применить"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("Design", "Sets manager"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5),
+                                  _translate("Design", "Sets manager"))
 
 
 class App(QWidget, UI_Design):
@@ -241,8 +251,10 @@ class App(QWidget, UI_Design):
             self.comboBox.removeItem(0)
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        arr = cursor.execute(f"SELECT name FROM sqlite_master WHERE type='table'").fetchall()
-        self.sets = [arr[i][0] for i in range(len(arr)) if arr[i][0] != "stats"]
+        arr = cursor.execute(
+            f"SELECT name FROM sqlite_master WHERE type='table'").fetchall()
+        self.sets = [arr[i][0] for i in range(len(arr)) if
+                     arr[i][0] != "stats"]
 
         connection.close()
         del arr
@@ -257,45 +269,66 @@ class App(QWidget, UI_Design):
             if self.lineEdit.text()[-1] == " ":
                 self.numberW += 1
                 self.currentline[
-                    self.numberW % self.linelen] = f"<font color = blue>{self.words[self.numberW]}</font>"
+                    self.numberW % self.linelen] = f"<font color = \
+                    blue>{self.words[self.numberW]}</font>"
                 self.textEdit.setText(
-                    "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                    "<p>" + " ".join(
+                        self.currentline) + "</p>" + "<p>" + " ".join(
+                        self.nextline) + "</p>")
                 if self.lineEdit.text().rstrip(" ") == self.currentWord:
-                    self.currentline[self.numberW % self.linelen - 1] = f"<font color = green>{self.currentWord}</font>"
+                    self.currentline[
+                        self.numberW % self.linelen - 1] = f"<font color = \
+                        green>{self.currentWord}</font>"
                     self.textEdit.setText(
-                        "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                        "<p>" + " ".join(
+                            self.currentline) + "</p>" + "<p>" + " ".join(
+                            self.nextline) + "</p>")
                     self.rightWords += 1
 
                 else:
                     self.currentline[
-                        self.numberW % self.linelen - 1] = f"<font color = red>{self.currentWord}</font>"
+                        self.numberW % self.linelen - 1] = f"<font color = \
+                        red>{self.currentWord}</font>"
                     self.textEdit.setText(
-                        "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                        "<p>" + " ".join(
+                            self.currentline) + "</p>" + "<p>" + " ".join(
+                            self.nextline) + "</p>")
                     self.wrongWords += 1
                 self.currentWord = self.words[self.numberW]
                 self.lineEdit.setText("")
                 if self.numberW % self.linelen == 0:
                     self.currentline = self.nextline
-                    self.nextline = self.words[self.numberW + self.linelen:self.numberW + self.linelen * 2]
+                    self.nextline = self.words[
+                                    self.numberW + self.linelen:
+                                    self.numberW + self.linelen * 2]
                     self.currentline[
-                        self.numberW % self.linelen] = f"<font color = blue>{self.words[self.numberW]}</font>"
+                        self.numberW % self.linelen] = f"<font color = \
+                        blue>{self.words[self.numberW]}</font>"
                     self.textEdit.setText(
-                        "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                        "<p>" + " ".join(
+                            self.currentline) + "</p>" + "<p>" + " ".join(
+                            self.nextline) + "</p>")
             elif self.typenWord != self.lineEdit.text():
                 if self.lineEdit.text() in self.currentWord:
                     self.typenWord = self.lineEdit.text()
                     self.righttaps += 1
                     self.currentline[
-                        self.numberW % self.linelen] = f"<font color = blue>{self.words[self.numberW]}</font>"
+                        self.numberW % self.linelen] = f"<font color = \
+                        blue>{self.words[self.numberW]}</font>"
                     self.textEdit.setText(
-                        "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                        "<p>" + " ".join(
+                            self.currentline) + "</p>" + "<p>" + " ".join(
+                            self.nextline) + "</p>")
                 else:
                     self.typenWord = self.lineEdit.text()
                     self.wrongtaps += 1
                     self.currentline[
-                        self.numberW % self.linelen] = f"<font color = #FF33D1>{self.words[self.numberW]}</font>"
+                        self.numberW % self.linelen] = f"<font color = \
+                        #FF33D1>{self.words[self.numberW]}</font>"
                     self.textEdit.setText(
-                        "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+                        "<p>" + " ".join(
+                            self.currentline) + "</p>" + "<p>" + " ".join(
+                            self.nextline) + "</p>")
         if self.testing:
             self.time -= 0.01
             self.lcdNumber_2.display(int(self.time))
@@ -309,9 +342,11 @@ class App(QWidget, UI_Design):
 
             self.label_5.setText(f"{self.rightWords}СВМ")
             self.lineEdit_2.setText(
-                f"<font color = green>{self.righttaps}</font> | <font color = red>{self.wrongtaps}</font>")
+                f"<font color = green>{self.righttaps}\
+                </font> | <font color = red>{self.wrongtaps}</font>")
             try:
-                self.lineEdit_3.setText(str(int((self.righttaps / (self.righttaps + self.wrongtaps)) * 100)) + "%")
+                self.lineEdit_3.setText(str(int((self.righttaps / (
+                        self.righttaps + self.wrongtaps)) * 100)) + "%")
             except ZeroDivisionError:
                 self.lineEdit_3.setText("0" + "%")
             self.lineEdit_4.setText(str(self.rightWords))
@@ -321,7 +356,9 @@ class App(QWidget, UI_Design):
             cursor = connection.cursor()
 
             cursor.execute(
-                f"INSERT INTO stats VALUES('{datetime.now()}', {self.rightWords}, {self.rightWords}, {self.wrongWords}, '{self.currentSet}')")
+                f"INSERT INTO stats VALUES('{datetime.now()}', \
+{self.rightWords}, {self.rightWords}, \
+                {self.wrongWords}, '{self.currentSet}')")
             connection.commit()
             connection.close()
             self.RSstart()
@@ -333,9 +370,13 @@ class App(QWidget, UI_Design):
     def onpush(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        lengh = cursor.execute(f"SELECT COUNT(*) FROM {self.currentSet}").fetchall()[0][0]
+        lengh = \
+            cursor.execute(
+                f"SELECT COUNT(*) FROM {self.currentSet}").fetchall()[
+                0][0]
         self.words = [cursor.execute(f'''SELECT Word FROM {self.currentSet}
-                WHERE id == {random.randint(1, lengh)}''').fetchall()[0][0] for i in range(500)]
+                WHERE id == {random.randint(1, lengh)}''').fetchall()[0][0] for
+                      i in range(500)]
         connection.close()
         self.testing = False
         self.time = 60
@@ -343,13 +384,16 @@ class App(QWidget, UI_Design):
         self.currentline = self.words[0:self.linelen]
         self.nextline = self.words[self.linelen:self.linelen * 2]
         self.textEdit.setText(
-            "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+            "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(
+                self.nextline) + "</p>")
         self.numberW = 0
         self.currentWord = self.words[0]
         self.currentline[
-            self.numberW % self.linelen] = f"<font color = blue>{self.words[self.numberW]}</font>"
+            self.numberW % self.linelen] = f"<font color = \
+            blue>{self.words[self.numberW]}</font>"
         self.textEdit.setText(
-            "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(self.nextline) + "</p>")
+            "<p>" + " ".join(self.currentline) + "</p>" + "<p>" + " ".join(
+                self.nextline) + "</p>")
         self.label_5.setText("")
         self.lineEdit_2.setText("")
         self.lineEdit_3.setText("")
@@ -364,11 +408,13 @@ class App(QWidget, UI_Design):
     def RSstart(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        information = cursor.execute("SELECT * FROM stats ORDER BY date ASC").fetchall()
+        information = cursor.execute(
+            "SELECT * FROM stats ORDER BY date ASC").fetchall()
         connection.close()
         self.tableWidget.setRowCount(len(information))
         self.tableWidget.setColumnCount(5)
-        self.tableWidget.setHorizontalHeaderLabels(["date", "wpm", "Correct Words", "Incorrect words", "used set"])
+        self.tableWidget.setHorizontalHeaderLabels(
+            ["date", "wpm", "Correct Words", "Incorrect words", "used set"])
         for i in range(len(information)):
             for _ in range(len(information[0])):
                 p = QTableWidgetItem(str(information[i][_]))
@@ -381,8 +427,7 @@ class App(QWidget, UI_Design):
         cursor = connection.cursor()
         try:
             cursor.execute(f"INSERT INTO StandartRU VALUES({1}, '{1}')")
-        except:
-
+        except BaseException:
             cursor.execute('''CREATE TABLE IF NOT EXISTS StandartRU
                       (id INT, Word TEXT)''')
 
@@ -396,14 +441,15 @@ class App(QWidget, UI_Design):
 
         try:
             cursor.execute(f"INSERT INTO StandartEN VALUES({1}, '{1}')")
-        except:
+        except BaseException:
             cursor.execute('''CREATE TABLE IF NOT EXISTS StandartEN
                       (id INT, Word TEXT)''')
 
             f = open("English.txt")
             _ = 1
             for i in f.read().split("\n"):
-                cursor.execute(f"INSERT INTO StandartEN VALUES({_}, '{i.split(':')[0]}')")
+                cursor.execute(
+                    f"INSERT INTO StandartEN VALUES({_}, '{i.split(':')[0]}')")
                 _ += 1
             f.close()
             connection.commit()
@@ -412,13 +458,14 @@ class App(QWidget, UI_Design):
     def CreateGraf(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        arr = [list(i) for i in cursor.execute(f"SELECT * FROM stats ORDER BY date ASC").fetchall()]
+        arr = [list(i) for i in cursor.execute(
+            f"SELECT * FROM stats ORDER BY date ASC").fetchall()]
         dikt = {}
         for i in arr:
             try:
                 dikt[int(i[0].split("-")[2].split(" ")[0])] += i[1]
                 dikt[int(i[0].split("-")[2].split(" ")[0])] /= 2
-            except:
+            except BaseException:
                 dikt[int(i[0].split("-")[2].split(" ")[0])] = i[1]
         x = [i for i in dikt]
         y = [dikt[i] for i in dikt]
@@ -428,17 +475,22 @@ class App(QWidget, UI_Design):
     def slice(self):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
-        if self.lineEdit_6.text() != "" and self.lineEdit_6.text() not in [i[0] for i in cursor.execute(
-                f"SELECT name FROM sqlite_master WHERE type='table'").fetchall()] and list(
-            self.textEdit_2.toPlainText()) != []:
+        if self.lineEdit_6.text() != "" and self.lineEdit_6.text() not in \
+                [i[0] for i in cursor.execute(f"SELECT name FROM sqlite_master\
+                 WHERE type='table'").fetchall()] and \
+                list(self.textEdit_2.toPlainText()) != []:
             try:
-                cursor.execute(f"INSERT INTO {self.lineEdit_6.text()} VALUES({1}, '{1}')")
-            except:
-                cursor.execute(f'''CREATE TABLE IF NOT EXISTS {self.lineEdit_6.text()}
+                cursor.execute(
+                    f"INSERT INTO {self.lineEdit_6.text()} VALUES({1}, '{1}')")
+            except BaseException:
+                cursor.execute(
+                    f'''CREATE TABLE IF NOT EXISTS {self.lineEdit_6.text()}
                                   (id INT, Word TEXT)''')
                 _ = 1
                 for i in set(self.textEdit_2.toPlainText().split()):
-                    cursor.execute(f"INSERT INTO {self.lineEdit_6.text()} VALUES({_}, '{str(i)}')")
+                    cursor.execute(
+                        f"INSERT INTO {self.lineEdit_6.text()} VALUES({_},\
+                         '{str(i)}')")
                     _ += 1
                 del _
                 connection.commit()
@@ -446,12 +498,18 @@ class App(QWidget, UI_Design):
             self.lineEdit_6.setText("")
             self.textEdit_2.setText("")
         elif self.lineEdit_6.text() == "":
-            QMessageBox.warning(self, 'Предупреждение', 'Вы должны выбрать имя сета!', QMessageBox.Ok)
+            QMessageBox.warning(self, 'Предупреждение',
+                                'Вы должны выбрать имя сета!', QMessageBox.Ok)
         elif self.lineEdit_6.text() in [i[0] for i in cursor.execute(
-                f"SELECT name FROM sqlite_master WHERE type='table'").fetchall()]:
-            QMessageBox.warning(self, 'Предупреждение', 'Такое имя сета уже существует!', QMessageBox.Ok)
+                f"SELECT name FROM sqlite_master WHERE\
+                 type='table'").fetchall()]:
+            QMessageBox.warning(self, 'Предупреждение',
+                                'Такое имя сета уже существует!',
+                                QMessageBox.Ok)
         elif list(self.textEdit_2.toPlainText()) == []:
-            QMessageBox.warning(self, 'Предупреждение', 'Вы должны ввести в поле хотя бы 1 слово!', QMessageBox.Ok)
+            QMessageBox.warning(self, 'Предупреждение',
+                                'Вы должны ввести в поле хотя бы 1 слово!',
+                                QMessageBox.Ok)
         connection.close()
 
     def SetManagerReFresh(self):
@@ -463,15 +521,16 @@ class App(QWidget, UI_Design):
                 pass
             information = cursor.execute(f"""
                     SELECT * FROM {self.lineEdit_7.text()} 
-                    WHERE Word == '{self.lineEdit_8.text()}' or id == {self.lineEdit_8.text()}""").fetchall()
-        except:
+                    WHERE Word == '{self.lineEdit_8.text()}' or \
+                    id == {self.lineEdit_8.text()}""").fetchall()
+        except BaseException:
             pass
         if not information:
             try:
                 information = cursor.execute(f"""
                 SELECT * FROM {self.lineEdit_7.text()}
                 WHERE Word == '{self.lineEdit_8.text()}'""").fetchall()
-            except:
+            except BaseException:
                 pass
         connection.close()
         if information != self.information:
@@ -479,10 +538,12 @@ class App(QWidget, UI_Design):
                 if information != []:
                     self.tableWidget_2.setRowCount(len(information))
                     self.tableWidget_2.setColumnCount(2)
-                    self.tableWidget_2.setHorizontalHeaderLabels(["id", "Word"])
+                    self.tableWidget_2.setHorizontalHeaderLabels(
+                        ["id", "Word"])
                     for i in range(len(information)):
                         for _ in range(len(information[0])):
-                            self.tableWidget_2.setItem(i, _, QTableWidgetItem(str(information[i][_])))
+                            self.tableWidget_2.setItem(i, _, QTableWidgetItem(
+                                str(information[i][_])))
                             if _ % 2 == 0:
                                 p = QTableWidgetItem(str(information[i][_]))
                                 p.setFlags(QtCore.Qt.ItemIsEnabled)
@@ -496,7 +557,8 @@ class App(QWidget, UI_Design):
         connection = sqlite3.connect('Sets.db')
         cursor = connection.cursor()
         cursor.execute(
-            f"UPDATE {self.lineEdit_7.text()} SET Word = '{self.reriterow[1]}' Where id == {self.reriterow[0]}")
+            f"UPDATE {self.lineEdit_7.text()} SET Word = '{self.reriterow[1]}'\
+             Where id == {self.reriterow[0]}")
         connection.commit()
         connection.close()
 
@@ -504,7 +566,7 @@ class App(QWidget, UI_Design):
         try:
             int(item.text())
             self.reriterow[0] = item.text()
-        except:
+        except BaseException:
             self.reriterow[1] = item.text()
 
 
